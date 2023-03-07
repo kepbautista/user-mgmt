@@ -1,0 +1,104 @@
+service: user-mgmt
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-southeast-1
+  stage: dev
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - cognito-idp:AdminInitiateAuth
+            - cognito-idp:AdminCreateUser
+            - cognito-idp:AdminDeleteUser
+            - cognito-idp:AdminSetUserPassword
+          Resource: "*"
+
+functions:
+  loginUser:
+    handler: user/login.handler
+    events:
+      - http:
+          path: user/login
+          method: post
+          cors: true
+
+  addUser:
+    handler: user/add.handler
+    events:
+      - http:
+          path: user/add
+          method: post
+          cors: true
+
+  readOneUser:
+    handler: user/read.readOne
+    events:
+      - http:
+          path: user/get
+          method: GET
+
+  readAllUser:
+    handler: user/read.readAll
+    events:
+      - http:
+          path: user/getall
+          method: GET
+
+  deleteOneUser:
+    handler: user/delete.deleteOne
+    events:
+      - http:
+          path: user/delete
+          method: PATCH
+
+  deleteMultipleUser:
+    handler: user/delete.deleteMultiple
+    events:
+      - http:
+          path: user/delete/multiple
+          method: PATCH
+
+  updateUser:
+    handler: user/update.updateUser
+    events:
+      - http:
+          path: user/update
+          method: PATCH
+
+  changePassword:
+    handler: user/update.changePassword
+    events:
+      - http:
+          path: user/update/password
+          method: PATCH
+
+resources:
+  Resources:
+    UserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: serverless-auth-pool
+        Schema:
+          - Name: email
+            Required: true
+            Mutable: true
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+        AutoVerifiedAttributes: ["email"]
+
+    UserClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: user-pool-ui
+        GenerateSecret: false
+        UserPoolId: { Ref: UserPool }
+        AccessTokenValidity: 5
+        IdTokenValidity: 5
+        ExplicitAuthFlows:
+          - "ADMIN_NO_SRP_AUTH"
+          - "USER_PASSWORD_AUTH"
