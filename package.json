@@ -1,0 +1,33 @@
+{
+  "name": "user-mgmt",
+  "version": "1.0.0",
+  "description": "<!-- title: 'AWS NodeJS Example' description: 'This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.' layout: Doc framework: v3 platform: AWS language: nodeJS priority: 1 authorLink: 'https://github.com/serverless' authorName: 'Serverless, inc.' authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4' -->",
+  "main": "config.js",
+  "dependencies": {
+    "amazon-cognito-identity-js": "^6.1.2",
+    "aws-sdk": "^2.1328.0",
+    "crypto": "^1.0.1",
+    "jsonwebtoken": "^9.0.0",
+    "jwk-to-pem": "^2.0.5",
+    "jwt-decode": "^3.1.2",
+    "mysql": "^2.18.1",
+    "node-fetch": "^3.3.0",
+    "request": "^2.88.2",
+    "serverless-mysql": "^1.5.4",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kepbautista/user-mgmt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kepbautista/user-mgmt/issues"
+  },
+  "homepage": "https://github.com/kepbautista/user-mgmt#readme"
+}
